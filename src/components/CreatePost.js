@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const CreatePost = ({ user, posts, setPosts }) => {
+const CreatePost = ({ user, hadnleAddPost }) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const imageInputRef = useRef();
@@ -9,8 +9,8 @@ const CreatePost = ({ user, posts, setPosts }) => {
   function hadnleSubmit(event) {
     event.preventDefault();
     const post = { content, image, user };
-    const newPosts = [post, ...posts];
-    setPosts(newPosts);
+    hadnleAddPost(post);
+
     console.log(post);
     imageInputRef.current.value = "";
     inputField.current.value = "";
