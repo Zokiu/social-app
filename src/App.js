@@ -1,37 +1,36 @@
-import React, { useState, useEffect, useCallback, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import Login from "./components/Login";
 import Header from "./components/Header";
 import CreatePost from "./components/CreatePost";
 import PostList from "./components/PostList";
+import postReducer from "./reducer";
 
 export const UserContext = React.createContext();
+export const PostContext = React.createContext({ posts: [] });
 // UserContext.Consumer;
 
 const App = () => {
-  const [user, setUser] = useState("manjaca");
-  const [posts, setPosts] = useState([]);
+  const initialPostState = React.useContext(PostContext);
+  const [state, dispatch] = React.useReducer(postReducer, initialPostState);
+  const [user, setUser] = useState("Zokiu");
+  // const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     document.title = user ? user : "Login";
   }, [user]);
 
-  const hadnleAddPost = React.useCallback(
-    (newPost) => {
-      setPosts([newPost, ...posts]);
-    },
-    [posts]
-  );
-
   if (!user) {
     return <Login setUser={setUser} />;
   }
   return (
-    <UserContext.Provider value={user}>
-      This is mian app
-      <Header user={user} setUser={setUser} />
-      <CreatePost user={user} hadnleAddPost={hadnleAddPost} />
-      <PostList posts={posts} />
-    </UserContext.Provider>
+    <PostContext.Provider value={{ state, dispatch }}>
+      <UserContext.Provider value={user}>
+        This is mian app
+        <Header user={user} setUser={setUser} />
+        <CreatePost user={user} />
+        <PostList posts={state.posts} />
+      </UserContext.Provider>
+    </PostContext.Provider>
   );
 };
 

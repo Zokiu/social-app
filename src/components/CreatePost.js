@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
+import { PostContext } from "../App";
 
-const CreatePost = ({ user, hadnleAddPost }) => {
+const CreatePost = ({ user }) => {
+  const { dispatch } = React.useContext(PostContext);
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const imageInputRef = useRef();
@@ -8,9 +10,9 @@ const CreatePost = ({ user, hadnleAddPost }) => {
 
   function hadnleSubmit(event) {
     event.preventDefault();
-    const post = { content, image, user };
-    hadnleAddPost(post);
-
+    const post = { content, image, user, id: Date.now() };
+    //    hadnleAddPost(post);
+    dispatch({ type: "ADD_POST", payload: { post } });
     console.log(post);
     imageInputRef.current.value = "";
     inputField.current.value = "";
