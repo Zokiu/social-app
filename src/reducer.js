@@ -8,6 +8,7 @@ function postReducer(state, action) {
       const deletedPostId = action.payload.id;
       return { posts: state.posts.filter((post) => post.id !== deletedPostId) };
     }
+
     default:
       return state;
   }

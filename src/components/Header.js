@@ -5,7 +5,6 @@ const Header = ({ user, setUser }) => {
     <div>
       <p>Welcome, {user}!</p>
       <button onClick={() => setUser("")}>log out</button>
-      header
     </div>
   );
 };

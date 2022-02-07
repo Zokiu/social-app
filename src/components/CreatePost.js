@@ -10,12 +10,12 @@ const CreatePost = ({ user }) => {
 
   function hadnleSubmit(event) {
     event.preventDefault();
-    const post = { content, image, user, id: Date.now() };
-    //    hadnleAddPost(post);
+    let post = { content, image, user, id: Date.now() };
     dispatch({ type: "ADD_POST", payload: { post } });
-    console.log(post);
-    imageInputRef.current.value = "";
-    inputField.current.value = "";
+    setContent("");
+    setImage(null);
+    imageInputRef.current.value = null;
+    inputField.current.value = null;
   }
 
   return (
@@ -34,7 +34,15 @@ const CreatePost = ({ user }) => {
           onChange={(event) => setImage(event.target.files[0])}
           ref={imageInputRef}
         />
-        <button type="submit">Sumbit post</button>
+        <div>
+          <br></br>
+          {content ? (
+            <button type="submit">Sumbit post</button>
+          ) : (
+            <p style={{ color: "red" }}>Please enter some text</p>
+          )}
+        </div>
+        <br></br>
       </form>
     </div>
   );
